@@ -1,0 +1,6 @@
+[submodule "trello-react-app"]
+	path = trello-react-app
+	url = https://github.com/julianmedwards/trello-react-app.git
+[submodule "trello-api-sql"]
+	path = trello-api-sql
+	url = https://github.com/julianmedwards/trello-api-sql.git

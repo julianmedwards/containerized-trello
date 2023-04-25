@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: ./trello-react-app
+      args:
+        - NODE_VERSION=${NODE_VERSION}
+    deploy:
+      restart_policy:
+        condition: on-failure
+    working_dir: /usr/src/app
+    networks:
+      - localnetwork
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+      args:
+        - MYSQL_VERSION=${MYSQL_VERSION}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - ${MYSQL_PORT}:3306
+    networks:
+      - localnetwork
+  api:
+    depends_on:
+      - db
+    build:
+      context: ./trello-api-sql
+      args:
+        - NODE_VERSION=${NODE_VERSION}
+        - DATABASE_URL=${MYSQL_URL}
+        - DATABASE_NAME=${MYSQL_DATABASE}
+        - DATABASE_HOST=${MYSQL_HOST}
+        - DATABASE_USERNAME=${MYSQL_USER}
+        - DATABASE_PASSWORD=${MYSQL_PASSWORD}
+        - DATABASE_PORT=${MYSQL_PORT}
+    deploy:
+      restart_policy:
+        condition: on-failure
+    working_dir: /usr/src/api
+    ports:
+      - 5000:5000
+    networks:
+      - localnetwork
+
+networks:
+  localnetwork:

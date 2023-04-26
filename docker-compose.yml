@@ -36,7 +36,6 @@ services:
       context: ./trello-api-sql
       args:
         - NODE_VERSION=${NODE_VERSION}
-        - DATABASE_URL=${MYSQL_URL}
         - DATABASE_NAME=${MYSQL_DATABASE}
         - DATABASE_HOST=${MYSQL_HOST}
         - DATABASE_USERNAME=${MYSQL_USER}

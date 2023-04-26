@@ -9,6 +9,7 @@ function start-dev () {
 }
 
 function build-prod () {
+    cd trello-react-app && npm run build && cd ..
     docker compose build
 }
 

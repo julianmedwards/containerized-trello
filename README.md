@@ -16,6 +16,8 @@ For more information on git submodules you can read [this article](https://gist.
 
 Clone the repository with `git clone https://github.com/julianmedwards/containerized-trello.git --recurse-submodules` in order to include the submodule code.
 
+Run `bash ./scripts.sh init-repos` to install npm dependencies for the submodules.
+
 Make and commit changes as normal in each submodule's folder, they act as a normal git repo there. Once you've commited your changes in a submodule **you must add and commit the changes again in the parent directory**.
 
 Use `git pull --recurse-submodules` in the main directory or you won't get any changes to the submodules. You can also pull the submodules individually.

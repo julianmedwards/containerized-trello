@@ -25,7 +25,7 @@ Clone the repository with `git clone https://github.com/julianmedwards/container
 
 Run `bash ./scripts.sh init-repos` to install npm dependencies for the submodules.
 
-### Making changes
+### Handling changes
 
 Make and commit changes as normal in each submodule's folder, they act as a normal git repo there. Once you've commited your changes in a submodule **you must add and commit the changes again in the parent directory**.
 

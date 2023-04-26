@@ -10,6 +10,8 @@ services:
     image: julianmedwards/react-trello-app:prod
     ports:
       - 3000:3000
+  db:
+    image: julianmedwards/trello-mysql-db:prod
   api:
     build:
       dockerfile: Dockerfile

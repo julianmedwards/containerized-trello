@@ -15,4 +15,4 @@ services:
       dockerfile: Dockerfile
       args:
         - NODE_ENV=production
-    image: julianmedwards/react-api-sql:prod
+    image: julianmedwards/trello-api-sql:prod

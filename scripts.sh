@@ -17,7 +17,7 @@ function start-prod () {
     docker compose up -d
 }
 
-function stop-prod () {
+function stop () {
     docker compose down
 }
 

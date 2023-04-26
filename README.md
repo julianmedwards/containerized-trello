@@ -4,20 +4,32 @@ A simple Trello-like kanban board web app for [Inventive Academy](https://invent
 
 The app consists of a frontend web client built with React, a REST API built with Restify and Sequelize, and a MySQL database for storage. It's set up with Docker for production deployment and development containers, as well as taking care of hosting the database.
 
-## How to host
-
-Instructions on hosting the app in a production environment.
-
-Configuration for the Docker production environment is located in the docker-compose.override.yml file.
-
-## How to develop using a Docker development container
-
-Instructions on hosting and working on the app in a development environment.
-
-Configuration for the Docker development container is located in the docker-compose.dev.yml file.
-
 ## This repository uses git submodules
 
 This is the _superproject_ which contains submodule repositories for the app (frontend) and REST API (backend).
 
 For more information on git submodules you can read [this article](https://gist.github.com/gitaarik/8735255) or look at the [git documentation](https://git-scm.com/docs/gitsubmodules).
+
+### A quick rundown
+
+Clone the repository with `git clone https://github.com/julianmedwards/containerized-trello.git --recurse-submodules` in order to include the submodule code.
+
+Make and commit changes as normal in each submodule's folder, they act as a normal git repo there. Once you've commited your changes in a submodule **you must add and commit the changes again in the parent directory**.
+
+When pulling changes use `git pull --recurse-submodules` to pull submodules changes. You can also pull the submodules individually.
+
+## How to host
+
+Run the script `bash ./scripts.sh build-prod` which will build the react app and then the docker containers.
+
+Run `bash ./scripts.sh start-prod` to start the docker app with docker compose. It may take a few moments for the database to get running before the api can connect properly.
+
+Production configuration is found in docker-compose.override.yml.
+
+## How to develop using a Docker development container/environment
+
+Run `bash ./scripts.sh build-dev` to build the docker containers.
+
+Run `bash ./scripts.sh start-dev` to bring up the containers. You will be able to make changes to both the react app and api and see them reflected in the container.
+
+Docker dev container configuration is found in docker-compose.dev.yml.

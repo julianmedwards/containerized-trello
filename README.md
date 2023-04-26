@@ -31,9 +31,9 @@ Run the script `bash ./scripts.sh build-prod` which will build the react app and
 
 Run `bash ./scripts.sh start-prod` to start the docker app with docker compose. It may take a few moments for the database to get running before the api can connect properly.
 
-`bash .scripts.sh stop` will stop the app's containers whether in development or production.
-
 Connect to localhost:3000 to see the app or query the api on localhost:5000.
+
+`bash ./scripts.sh stop` will stop the app's containers whether in development or production.
 
 Production configuration is found in docker-compose.override.yml
 
@@ -47,6 +47,6 @@ Run `bash ./scripts.sh start-dev` to bring up the containers.
 
 Connect to localhost:3001 to see the app or query the api on localhost:5000.
 
-`bash .scripts.sh stop` will stop the app's containers whether in development or production.
+`bash ./scripts.sh stop` will stop the app's containers whether in development or production.
 
 Docker dev container configuration is found in docker-compose.dev.yml

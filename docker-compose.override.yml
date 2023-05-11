@@ -6,7 +6,9 @@ services:
       dockerfile: Dockerfile
       args:
         - NODE_ENV=production
-        - PORT=3000
+        - CLIENT_PORT=3000
+        - API_IP=${API_IP}
+        - API_PORT=5000
     image: julianmedwards/react-trello-app:prod
     ports:
       - 3000:3000

@@ -1,17 +1,6 @@
 version: '3'
 
 services:
-  client:
-    build:
-      context: ./trello-react-app
-      args:
-        - NODE_VERSION=${NODE_VERSION}
-    deploy:
-      restart_policy:
-        condition: on-failure
-    working_dir: /usr/src/app
-    networks:
-      - localnetwork
   db:
     build:
       context: .

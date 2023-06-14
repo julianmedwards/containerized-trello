@@ -35,7 +35,7 @@ services:
         condition: on-failure
     working_dir: /usr/src/api
     ports:
-      - 5000:5000
+      - 80:5000
     networks:
       - localnetwork
 

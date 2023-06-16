@@ -41,6 +41,7 @@ services:
     environment:
       NODE_ENV: production
       API_PORT: ${API_PORT_PROD}
+      API_DOMAIN_NAME: ${API_DOMAIN_NAME}
       DATABASE_NAME: ${MYSQL_DATABASE}
       DATABASE_HOST: ${MYSQL_HOST}
       DATABASE_USERNAME: ${MYSQL_USER}

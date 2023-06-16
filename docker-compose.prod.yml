@@ -52,7 +52,7 @@ services:
     networks:
       - localnetwork
     volumes:
-      - /etc/letsencrypt/live/${API_DOMAIN_NAME}:/etc/certs/ssl
+      - /etc/letsencrypt/:/etc/letsencrypt
 
 networks:
   localnetwork:

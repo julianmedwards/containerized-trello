@@ -34,14 +34,14 @@ services:
     working_dir: /usr/src/api
     environment:
       NODE_ENV: production
-      API_PORT: ${API_PORT}
+      API_PORT: ${API_PORT_PROD}
       DATABASE_NAME: ${MYSQL_DATABASE}
       DATABASE_HOST: ${MYSQL_HOST}
       DATABASE_USERNAME: ${MYSQL_USER}
       DATABASE_PASSWORD: ${MYSQL_PASSWORD}
       DATABASE_PORT: ${MYSQL_PORT}
     ports:
-      - ${API_PORT}
+      - ${API_PORT_PROD}:${API_PORT_PROD}
     networks:
       - localnetwork
 

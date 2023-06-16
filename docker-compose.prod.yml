@@ -51,7 +51,8 @@ services:
       - ${API_PORT_PROD}:${API_PORT_PROD}
     networks:
       - localnetwork
-    volumes: /etc/letsencrypt/live/${API_DOMAIN_NAME}:/etc/certs/ssl
+    volumes:
+      - /etc/letsencrypt/live/${API_DOMAIN_NAME}:/etc/certs/ssl
 
 networks:
   localnetwork:

@@ -2,6 +2,7 @@ version: '3'
 
 services:
   db:
+    image: julianmedwards/trello-mysql-db:prod
     build:
       context: .
       dockerfile: Dockerfile.mysql
@@ -19,23 +20,27 @@ services:
     networks:
       - localnetwork
   api:
+    image: julianmedwards/trello-api-sql:prod
     depends_on:
       - db
     build:
       context: ./trello-api-sql
+      dockerfile: Dockerfile
       args:
         - NODE_VERSION=${NODE_VERSION}
-        - DATABASE_NAME=${MYSQL_DATABASE}
-        - DATABASE_HOST=${MYSQL_HOST}
-        - DATABASE_USERNAME=${MYSQL_USER}
-        - DATABASE_PASSWORD=${MYSQL_PASSWORD}
-        - DATABASE_PORT=${MYSQL_PORT}
     deploy:
       restart_policy:
         condition: on-failure
     working_dir: /usr/src/api
+    environment:
+      NODE_ENV: production
+      DATABASE_NAME: ${MYSQL_DATABASE}
+      DATABASE_HOST: ${MYSQL_HOST}
+      DATABASE_USERNAME: ${MYSQL_USER}
+      DATABASE_PASSWORD: ${MYSQL_PASSWORD}
+      DATABASE_PORT: ${MYSQL_PORT}
     ports:
-      - 80:5000
+      - 443:5000
     networks:
       - localnetwork
 

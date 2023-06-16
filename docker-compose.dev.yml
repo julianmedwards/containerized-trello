@@ -7,15 +7,17 @@ services:
       dockerfile: Dockerfile.dev
       args:
         - NODE_VERSION=${NODE_VERSION}
-        - NODE_ENV=development
     image: julianmedwards/react-trello-app:dev
     deploy:
       restart_policy:
         condition: on-failure
     environment:
+      NODE_ENV: development
+      VITE_API_ADDRESS: http://localhost
+      VITE_API_PORT: 5000
       CHOKIDAR_USEPOLLING: 'true'
     ports:
-      - 3001:5173
+      - 3000:5173
     working_dir: /usr/src/app
     volumes:
       - ./trello-react-app:/usr/src/app
@@ -23,15 +25,58 @@ services:
     networks:
       - localnetwork
   db:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+      args:
+        - MYSQL_VERSION=${MYSQL_VERSION}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    deploy:
+      restart_policy:
+        condition: on-failure
+    healthcheck:
+      test: 'mysqladmin ping -P 3306 -proot || exit 1'
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+    ports:
+      - 3377:${MYSQL_PORT}
+    networks:
+      - localnetwork
     image: julianmedwards/trello-mysql-db:dev
   api:
+    depends_on:
+      db:
+        condition: service_healthy
     build:
+      context: ./trello-api-sql
       dockerfile: Dockerfile.dev
       args:
-        - NODE_ENV=development
+        - NODE_VERSION=${NODE_VERSION}
+    deploy:
+      restart_policy:
+        condition: on-failure
     image: julianmedwards/trello-api-sql:dev
     environment:
+      NODE_ENV: development
+      DATABASE_NAME: ${MYSQL_DATABASE}
+      DATABASE_HOST: ${MYSQL_HOST}
+      DATABASE_USERNAME: ${MYSQL_USER}
+      DATABASE_PASSWORD: ${MYSQL_PASSWORD}
+      DATABASE_PORT: ${MYSQL_PORT}
       CHOKIDAR_USEPOLLING: 'true'
+    working_dir: /usr/src/api
+    ports:
+      - 5000:5000
+    networks:
+      - localnetwork
     volumes:
       - ./trello-api-sql:/usr/src/api
       - /usr/src/api/node_modules/
+
+networks:
+  localnetwork:

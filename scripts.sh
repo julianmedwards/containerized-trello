@@ -8,23 +8,27 @@ function init-repos () {
 }
 
 function build-dev () {
-    docker compose -f docker-compose.yml -f docker-compose.dev.yml build
+    docker compose -f docker-compose.dev.yml build
 }
 
 function start-dev () {
-    docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+    docker compose -f docker-compose.dev.yml up -d
+}
+
+function stop-dev () {
+    docker compose -f docker-compose.dev.yml down
 }
 
 function build-prod () {
-    docker compose build
+    docker compose -f docker-compose.prod.yml build
 }
 
 function start-prod () {
-    docker compose up -d
+    docker compose -f docker-compose.prod.yml  up
 }
 
-function stop () {
-    docker compose down
+function stop-prod () {
+    docker compose -f docker-compose.prod.yml down
 }
 
 eval "$@"

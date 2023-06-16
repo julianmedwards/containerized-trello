@@ -41,9 +41,12 @@ Use `git pull --recurse-submodules` in the main directory or you won't get any c
 
 Production configuration is found in docker-compose.override.yml
 
-## How to develop using a Docker development container/environment
+## How to develop on your local machine using docker.
 
-You can run the app in a Docker development environment while editing on your host machine with hot reloading. You will be able to edit both the react app and the api.
+<!-- API not connecting to DB -->
+<!-- How to set env vars in react app, "process" is not defined -->
+
+You can run the app in Docker while editing on your host machine with hot reloading. You will be able to edit both the react app and the api.
 
 -   `bash ./scripts.sh build-dev` will build and bind the submodule directories to their respective containers.
 

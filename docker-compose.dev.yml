@@ -13,11 +13,11 @@ services:
         condition: on-failure
     environment:
       NODE_ENV: development
-      VITE_API_ADDRESS: http://localhost
-      VITE_API_PORT: 5000
+      VITE_API_ADDRESS: ${API_ADDRESS}
+      VITE_API_PORT: ${API_PORT}
       CHOKIDAR_USEPOLLING: 'true'
     ports:
-      - 3000:5173
+      - ${CLIENT_PORT_ALIAS}:5173
     working_dir: /usr/src/app
     volumes:
       - ./trello-react-app:/usr/src/app
@@ -28,15 +28,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.mysql
-      args:
-        - MYSQL_VERSION=${MYSQL_VERSION}
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_USER=${MYSQL_USER}
-        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     deploy:
       restart_policy:
         condition: on-failure
+    environment:
+      MYSQL_VERSION: ${MYSQL_VERSION}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     healthcheck:
       test: 'mysqladmin ping -P 3306 -proot || exit 1'
       interval: 10s
@@ -44,7 +44,7 @@ services:
       start_period: 10s
       retries: 5
     ports:
-      - 3377:${MYSQL_PORT}
+      - ${MYSQL_PORT_ALIAS}:${MYSQL_PORT}
     networks:
       - localnetwork
     image: julianmedwards/trello-mysql-db:dev
@@ -63,6 +63,7 @@ services:
     image: julianmedwards/trello-api-sql:dev
     environment:
       NODE_ENV: development
+      API_PORT: ${API_PORT}
       DATABASE_NAME: ${MYSQL_DATABASE}
       DATABASE_HOST: ${MYSQL_HOST}
       DATABASE_USERNAME: ${MYSQL_USER}
@@ -71,7 +72,7 @@ services:
       CHOKIDAR_USEPOLLING: 'true'
     working_dir: /usr/src/api
     ports:
-      - 5000:5000
+      - ${API_PORT}
     networks:
       - localnetwork
     volumes:

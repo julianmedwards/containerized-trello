@@ -6,17 +6,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.mysql
-      args:
-        - MYSQL_VERSION=${MYSQL_VERSION}
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_USER=${MYSQL_USER}
-        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     deploy:
       restart_policy:
         condition: on-failure
+    environment:
+      MYSQL_VERSION: ${MYSQL_VERSION}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
-      - 3377:${MYSQL_PORT}
+      - ${MYSQL_PORT_ALIAS}:${MYSQL_PORT}
     networks:
       - localnetwork
   api:
@@ -34,13 +34,14 @@ services:
     working_dir: /usr/src/api
     environment:
       NODE_ENV: production
+      API_PORT: ${API_PORT}
       DATABASE_NAME: ${MYSQL_DATABASE}
       DATABASE_HOST: ${MYSQL_HOST}
       DATABASE_USERNAME: ${MYSQL_USER}
       DATABASE_PASSWORD: ${MYSQL_PASSWORD}
       DATABASE_PORT: ${MYSQL_PORT}
     ports:
-      - 443:5000
+      - ${API_PORT}
     networks:
       - localnetwork
 

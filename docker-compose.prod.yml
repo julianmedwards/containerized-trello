@@ -2,15 +2,21 @@ version: '3'
 
 services:
   db:
-    image: julianmedwards/trello-mysql-db:prod
     build:
       context: .
       dockerfile: Dockerfile.mysql
+      args:
+        - MYSQL_VERSION=${MYSQL_VERSION}
     deploy:
       restart_policy:
         condition: on-failure
+    healthcheck:
+      test: 'mysqladmin ping -P 3306 -proot || exit 1'
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
     environment:
-      MYSQL_VERSION: ${MYSQL_VERSION}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
@@ -20,9 +26,9 @@ services:
     networks:
       - localnetwork
   api:
-    image: julianmedwards/trello-api-sql:prod
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     build:
       context: ./trello-api-sql
       dockerfile: Dockerfile

@@ -24,7 +24,7 @@ function build-prod () {
 }
 
 function start-prod () {
-    docker compose -f docker-compose.prod.yml  up
+    docker compose -f docker-compose.prod.yml up
 }
 
 function stop-prod () {

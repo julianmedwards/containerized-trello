@@ -7,7 +7,6 @@ services:
       dockerfile: Dockerfile.dev
       args:
         - NODE_VERSION=${NODE_VERSION}
-    image: julianmedwards/react-trello-app:dev
     deploy:
       restart_policy:
         condition: on-failure
@@ -28,11 +27,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.mysql
+      args:
+        - MYSQL_VERSION=${MYSQL_VERSION}
     deploy:
       restart_policy:
         condition: on-failure
     environment:
-      MYSQL_VERSION: ${MYSQL_VERSION}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
@@ -47,7 +47,6 @@ services:
       - ${MYSQL_PORT_ALIAS}:${MYSQL_PORT}
     networks:
       - localnetwork
-    image: julianmedwards/trello-mysql-db:dev
   api:
     depends_on:
       db:
@@ -60,7 +59,6 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-    image: julianmedwards/trello-api-sql:dev
     environment:
       NODE_ENV: development
       API_PORT: ${API_PORT_DEV}

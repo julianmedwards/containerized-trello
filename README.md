@@ -57,4 +57,4 @@ You can run the app in Docker while editing on your host machine with hot reload
 
 ## Stopping the app
 
-`bash ./scripts.sh stop` will stop the app's containers whether in development or production.
+`bash ./scripts.sh` + `stop-prod` or `stop-dev` will stop the app's containers in development or production.

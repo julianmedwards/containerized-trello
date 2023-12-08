@@ -1,12 +1,8 @@
 # Trello App
 
-### You can view this app [here](https://trello.mejulian.dev/)!
-
 A simple Trello-like kanban board web app for [Inventive Academy](https://inventiveacademy.io/)'s Full Stack Immersive with Node web development course.
 
 The app consists of a frontend web client built with React, a REST API built with Restify and Sequelize, and a MySQL database for storage. It's set up with Docker for production deployment and development containers, as well as taking care of hosting the database.
-
-Note that this app is currently not connected to any persistent storage volumes.
 
 ## Requirements
 
@@ -35,7 +31,7 @@ Use `git pull --recurse-submodules` in the main directory or you won't get any c
 
 ## How to host
 
-In production you can use any static file hosting solution to serve the client. This project is currently using [Vercel](https://vercel.com/). You must build the client with the VITE_API_ADDRESS (in format https://domain-name.end/) and VITE_API_PORT environment variables set.
+In production you can use any static file hosting solution to serve the client.
 
 As currently set up, the web server requires SSL certification and will be served through HTTPS if you run in production. Also make sure the API_DOMAIN_NAME variable is accurate in the .env file.
 
